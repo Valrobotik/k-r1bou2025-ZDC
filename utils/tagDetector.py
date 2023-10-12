@@ -15,33 +15,31 @@ from pathlib import Path
 
 imgpath = Path(__file__).parent.parent / "img"
 
-def recognize_arucos(img) :
+def recognize_arucos(img, wimg = False) :
     arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
     params = cv2.aruco.DetectorParameters()
     detector = cv2.aruco.ArucoDetector(arucoDict, params)
     (corners, ids, rejected) = detector.detectMarkers(img)
+
+    if wimg :
+        try :
+            for i in range(len(ids)) :
+                x = (corners[i][0][0][0] + corners[i][0][1][0] + corners[i][0][2][0] + corners[i][0][3][0]) / 4
+                y = (corners[i][0][0][1] + corners[i][0][1][1] + corners[i][0][2][1] + corners[i][0][3][1]) / 4
+                print("ID : ", ids[i], "Position: ", x, y)
+                cv2.drawMarker(img, (int(x), int(y)), (0, 255, 0), cv2.MARKER_CROSS, 20, 2) #affiche une croix sur le centre de l'aruco
+            for i in range(len(rejected)) :
+                pass
+            cv2.imwrite(str(imgpath / "detected_arucos.jpg"), img)
+        except :
+            pass #no arucos detected
+
+
     return corners, ids, rejected
 
 def display_arucos(img) :
-    corners, ids, rejected = recognize_arucos(img)
     clear_output(wait=True)
-    try :
-        temp =  ids.shape[0]
-        for i in range(len(ids)) :
-            x = (corners[i][0][0][0] + corners[i][0][1][0] + corners[i][0][2][0] + corners[i][0][3][0]) / 4
-            y = (corners[i][0][0][1] + corners[i][0][1][1] + corners[i][0][2][1] + corners[i][0][3][1]) / 4
-            print("ID : ", ids[i], "Position: ", x, y)
-            cv2.drawMarker(img, (int(x), int(y)), (0, 255, 0), cv2.MARKER_CROSS, 20, 2) #affiche une croix sur le centre de l'aruco
-        for i in range(len(rejected)) :
-            #print("ID: ", rejected[i])
-            pass
-        #cv2.aruco.drawDetectedMarkers(img, corners, ids, (0, 255, 0)) #affiche les arucos détectés sur l'image
-        #if windows
-        cv2.imwrite(str(imgpath / "detected_arucos.jpg"), img)
-
-    except :
-        pass #no arucos detected
-
+    recognize_arucos(img, True)
     cv2.imshow(str(imgpath / "webcam"), img)    
     c = cv2.waitKey(1)
 
