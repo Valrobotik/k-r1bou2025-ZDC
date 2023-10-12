@@ -1,6 +1,6 @@
 # coding : utf-8
 # Nom du fichier : tagDetector.py
-# Auteur : Zathomos
+# Auteur : zatomos
 # Date de création : 21-09-2023
 # Modifié par : Paul
 # Date de modification : 24-09-2023
@@ -11,6 +11,9 @@ import cv2
 import time
 from IPython.display import clear_output
 import keyboard
+from pathlib import Path
+
+imgpath = Path(__file__).parent.parent / "img"
 
 def recognize_arucos(img) :
     arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
@@ -33,12 +36,13 @@ def display_arucos(img) :
             #print("ID: ", rejected[i])
             pass
         #cv2.aruco.drawDetectedMarkers(img, corners, ids, (0, 255, 0)) #affiche les arucos détectés sur l'image
-        cv2.imwrite("detected_arucos.jpg", img)
+        #if windows
+        cv2.imwrite(str(imgpath / "detected_arucos.jpg"), img)
 
     except :
         pass #no arucos detected
 
-    cv2.imshow("webcam", img)    
+    cv2.imshow(str(imgpath / "webcam"), img)    
     c = cv2.waitKey(1)
 
 def realtime_detection(cam_id : int) :
@@ -50,9 +54,9 @@ def realtime_detection(cam_id : int) :
             break
         rst, img = cam.read()
         if rst :
-            cv2.imwrite("webcam.jpg", img)
+            cv2.imwrite(str(imgpath / "webcam.jpg"), img)
             display_arucos(img)
-            #time.sleep(0.2)
+            time.sleep(0.1)
     
     cam.release()
 
