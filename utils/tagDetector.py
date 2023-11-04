@@ -18,6 +18,10 @@ imgpath = Path(__file__).parent.parent / "img"
 def recognize_arucos(img, wimg = False) :
     arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
     params = cv2.aruco.DetectorParameters()
+    params.detectInvertedMarker = True
+    params.adaptiveThreshWinSizeMax = 10
+    params.errorCorrectionRate = .8
+
     detector = cv2.aruco.ArucoDetector(arucoDict, params)
     (corners, ids, rejected) = detector.detectMarkers(img)
 
@@ -29,7 +33,9 @@ def recognize_arucos(img, wimg = False) :
                 print("ID : ", ids[i], "Position: ", x, y)
                 cv2.drawMarker(img, (int(x), int(y)), (0, 255, 0), cv2.MARKER_CROSS, 20, 2) #affiche une croix sur le centre de l'aruco
             for i in range(len(rejected)) :
-                pass
+                x = (rejected[i][0][0][0] + rejected[i][0][1][0] + rejected[i][0][2][0] + rejected[i][0][3][0]) / 4
+                y = (rejected[i][0][0][1] + rejected[i][0][1][1] + rejected[i][0][2][1] + rejected[i][0][3][1]) / 4
+                cv2.drawMarker(img, (int(x), int(y)), (0, 0, 255), cv2.MARKER_CROSS, 20, 2)
             cv2.imwrite(str(imgpath / "detected_arucos.jpg"), img)
         except :
             pass #no arucos detected
