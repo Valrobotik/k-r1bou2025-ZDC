@@ -19,8 +19,6 @@ def recognize_arucos(img, wimg = False) :
     arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
     params = cv2.aruco.DetectorParameters()
     params.detectInvertedMarker = True
-    params.adaptiveThreshWinSizeMax = 10
-    params.errorCorrectionRate = .8
 
     detector = cv2.aruco.ArucoDetector(arucoDict, params)
     (corners, ids, rejected) = detector.detectMarkers(img)
@@ -36,6 +34,7 @@ def recognize_arucos(img, wimg = False) :
                 x = (rejected[i][0][0][0] + rejected[i][0][1][0] + rejected[i][0][2][0] + rejected[i][0][3][0]) / 4
                 y = (rejected[i][0][0][1] + rejected[i][0][1][1] + rejected[i][0][2][1] + rejected[i][0][3][1]) / 4
                 cv2.drawMarker(img, (int(x), int(y)), (0, 0, 255), cv2.MARKER_CROSS, 20, 2)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             cv2.imwrite(str(imgpath / "detected_arucos.jpg"), img)
         except :
             pass #no arucos detected
@@ -63,6 +62,12 @@ def realtime_detection(cam_id : int) :
             time.sleep(0.1)
     
     cam.release()
+
+def add_point_on_img(img, x : int, y : int, output : str) :
+    cv2.drawMarker(img, (int(x), int(y)), (0, 255, 0), cv2.MARKER_CROSS, 20, 2)
+    #rgb
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    cv2.imwrite(str(imgpath / output), img)
 
 if __name__ == "__main__" :
     realtime_detection(0)
