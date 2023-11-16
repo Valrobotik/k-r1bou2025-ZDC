@@ -1,0 +1,18 @@
+dimensions:
+  length: 300 #centimeters
+  height: 200
+
+robots:
+  friendly_id: 1 #ids
+  enemy_id: 5
+  radius: 191 #1200 / 2pi
+
+img:
+  name: "imgboard8.jpg"
+  perspective:
+    pts1: .0
+    pss2: .0
+
+pole:
+  decal: .0
+  height: 100.0
