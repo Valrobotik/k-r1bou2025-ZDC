@@ -4,7 +4,7 @@ robots:
   radius: 191 #1200 / 2pi
 
 img:
-  name: "imgboard8.jpg"
+  name: "imgboard.jpg"
   perspective:
     pts1: .0
     pss2: .0
