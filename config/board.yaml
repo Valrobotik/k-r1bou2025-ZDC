@@ -1,14 +1,28 @@
-robots:
-  friendly_id: 1 #ids
-  enemy_id: 5
-  radius: 191 #1200 / 2pi
-
 img:
-  name: "imgboard.jpg"
+  name: imgboard8.jpg
   perspective:
-    pts1: .0
-    pss2: .0
-
+    pts1:
+    - - 1187.75
+      - 334.75
+    - - 736.25
+      - 333.5
+    - - 1303.75
+      - 610.0
+    - - 619.0
+      - 607.75
+    pts2:
+    - - 1225.800048828125
+      - 270.0
+    - - 394.20001220703125
+      - 270.0
+    - - 1225.800048828125
+      - 810.0
+    - - 394.20001220703125
+      - 810.0
 pole:
-  decal: .0
+  decal: 0.0
   height: 100.0
+robots:
+  enemy_id: 5
+  friendly_id: 1
+  radius: 191

@@ -69,9 +69,7 @@ def main(robot_friendly = True) :
     config = yaml.safe_load(open(str(Path(__file__).parent / "config" / "board.yaml")))
     unwarped_img = str(Path(__file__).parent / "img" / "unwarped_img.jpg")
 
-    pts1, pts2 = flt.unwarp_img(str(Path(__file__).parent / "img" / config["img"]["name"]))
-    config["img"]["perspective"]["pts1"] = pts1
-    config["img"]["perspective"]["pts2"] = pts2
+    flt.unwarp_img(str(Path(__file__).parent / "img" / config["img"]["name"]))
     id = config["robots"]["friendly_id"] if robot_friendly else config["robots"]["enemy_id"]
     try :
         x, y = calc_real_pos(unwarped_img, config["pole"]["decal"], config["pole"]["height"], id)
