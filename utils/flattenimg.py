@@ -11,7 +11,7 @@
 
 
 
-import tagDetector as tagd
+from utils import tagDetector as tagd
 import matplotlib.image as mpimg
 import cv2
 from pathlib import Path

@@ -1,7 +1,3 @@
-dimensions:
-  length: 300 #centimeters
-  height: 200
-
 robots:
   friendly_id: 1 #ids
   enemy_id: 5

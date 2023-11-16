@@ -1,6 +1,6 @@
 """Determines the position of a robot on the board from a flattened image of the board."""
 
-from utils import tagDetector as tagd, flattenimg as flt
+from utils import flattenimg as flt, tagDetector as tagd
 import matplotlib.image as mpimg
 from pathlib import Path
 import numpy as np
@@ -60,15 +60,21 @@ def show_real_pos_img(img : str, x : float, y : float) :
     y = y * img_height / 200
     tagd.add_point_on_img(img, x, y, "real_pos.jpg")
 
-if __name__ == "__main__" :
+def main(robot_friendly = True) :
+    """The main function of the module. It calculates the position of the robot and displays it on the image:
+    Do not forget to modify the config file for the robot's aruco id and the pole's position
+    params :
+        robot_friendly : if True, our robot's aruco is detected. If False, the enemy's aruco is detected.
+    """
     config = yaml.safe_load(open(str(Path(__file__).parent / "config" / "board.yaml")))
     unwarped_img = str(Path(__file__).parent / "img" / "unwarped_img.jpg")
 
     pts1, pts2 = flt.unwarp_img(str(Path(__file__).parent / "img" / config["img"]["name"]))
     config["img"]["perspective"]["pts1"] = pts1
     config["img"]["perspective"]["pts2"] = pts2
+    id = config["robots"]["friendly_id"] if robot_friendly else config["robots"]["enemy_id"]
     try :
-        x, y = calc_real_pos(unwarped_img, config["pole"]["decal"], config["pole"]["height"], config["robots"]["enemy_id"])
+        x, y = calc_real_pos(unwarped_img, config["pole"]["decal"], config["pole"]["height"], id)
         show_real_pos_img(unwarped_img, x, y)
         print(x, y)
     except :
