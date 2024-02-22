@@ -16,6 +16,8 @@ from pathlib import Path
 imgpath = Path(__file__).parent.parent / "img"
 
 def recognize_arucos(img, wimg = False) :
+    """Recognizes the arucos in the image and displays them if wimg is True"""
+
     arucoDict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
     params = cv2.aruco.DetectorParameters()
     params.detectInvertedMarker = True
@@ -23,7 +25,7 @@ def recognize_arucos(img, wimg = False) :
     detector = cv2.aruco.ArucoDetector(arucoDict, params)
     (corners, ids, rejected) = detector.detectMarkers(img)
 
-    if wimg :
+    if wimg : #if display img
         try :
             for i in range(len(ids)) :
                 x = (corners[i][0][0][0] + corners[i][0][1][0] + corners[i][0][2][0] + corners[i][0][3][0]) / 4
@@ -38,7 +40,6 @@ def recognize_arucos(img, wimg = False) :
             cv2.imwrite(str(imgpath / "detected_arucos.jpg"), img)
         except :
             pass #no arucos detected
-
 
     return corners, ids, rejected
 
