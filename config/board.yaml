@@ -1,17 +1,17 @@
+cam_id: 0
 delay_reset: 1
+display: 1
 img:
-  name: imgboard.jpg
   perspective:
-    delay_reset: 1
     pts1:
-    - - 1346.25
-      - 368.0
-    - - 793.25
-      - 361.75
-    - - 1475.5
-      - 722.25
-    - - 749.25
-      - 725.25
+    - - 1326.0
+      - 379.25
+    - - 788.25
+      - 388.75
+    - - 1469.5
+      - 718.5
+    - - 753.0
+      - 742.75
     pts2:
     - - 1225.800048828125
       - 270.0
@@ -21,9 +21,16 @@ img:
       - 810.0
     - - 394.20001220703125
       - 810.0
+logger: INFO
 pole:
-  decal: 10.0
-  height: 160.0
+  decal: 10 # in cm. positive : left, negative : right
+  height: 160 # in cm
 robots:
-  enemy_id: 51
-  friendly_id: 51
+  blue_ar_height: 44 # in cm
+  blue_id_range:
+  - 51
+  - 70
+  yellow_ar_height: 50 # in cm
+  yellow_id_range:
+  - 71
+  - 90

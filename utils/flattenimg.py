@@ -9,13 +9,21 @@
 """
 
 
-
-
-from utils import tagDetector as tagd
 import cv2
 from pathlib import Path
 import numpy as np
 import yaml
+import logging
+
+from utils import tagDetector as tagd
+
+# Logger
+logging.basicConfig(level = logging.INFO)
+logger = logging.getLogger(__name__)
+with open(str(Path(__file__).parent.parent / "config" / "board.yaml"), "r") as f :
+    config = yaml.safe_load(f)
+    logger.setLevel(config["logger"])
+
 
 def edgeArucoDetection(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None) :
     """Detects the aruco at the 4 edges of the image (id 10-13). Returns their position and the size difference between the front and back aruco
@@ -33,7 +41,7 @@ def edgeArucoDetection(img : np.ndarray, detector : cv2.aruco.ArucoDetector = No
     nb_ar = 0
     
     if ids is None :
-        print("No arucos detected")
+        logger.error("No aruco found while getting the edges")
         return None
 
     #Process the pos of the arucos
@@ -47,7 +55,7 @@ def edgeArucoDetection(img : np.ndarray, detector : cv2.aruco.ArucoDetector = No
         arPos[ids[i][0] - 20] = [x, y]
     
     if nb_ar != 4 :
-        print("Not all arucos detected")
+        logger.error("Not all arucos found while getting the edges")
         return None
     return arPos
 
@@ -60,6 +68,9 @@ def calc_perspective(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None
     Returns:
         tuple: pts1, pts2, the sets of points for the perspective transformation
     """
+    
+    if detector is None :
+        detector = tagd.make_detector()
 
     #Detect arucos, load image
     arpos = edgeArucoDetection(img, detector)
@@ -73,6 +84,9 @@ def calc_perspective(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None
 
     #Load config file
     config = yaml.safe_load(open(str(Path(__file__).parent.parent / "config" / "board.yaml")))
+    
+    if arpos is None :
+        raise Exception("Couldn't calculate the perspective transformation; are the arucos visible?")
 
     #Calculate the perspective transformation
     pts1 = np.float32([arpos[2], arpos[3], arpos[0], arpos[1]])
@@ -92,7 +106,10 @@ def unwarp_img(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None, wimg
     Args:
         img (np.ndarray): Image to process
         detector (cv2.aruco.ArucoDetector, optional): Aruco detector to use. Defaults to None.
-        wimg (bool, optional): Whether to display the image with the arucos. Defaults to False.
+        wimg (bool, optional): Whether to write the image to the disk. Defaults to False.
+        
+    Returns:
+        np.ndarray: The unwarped image
     """
 
     #load image
@@ -121,6 +138,8 @@ def unwarp_img(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None, wimg
 
     #Apply transformation and save the image
     dst = cv2.warpPerspective(img, M, (img_width*2, img_height*2))
-    cv2.imwrite(str(Path(__file__).parent.parent / "img" / "unwarped_img.jpg"), dst)
+    
+    if wimg:
+        cv2.imwrite(str(Path(__file__).parent.parent / "img" / "unwarped_img.jpg"), dst)
     
     return dst
