@@ -1,28 +1,29 @@
+delay_reset: 1
 img:
-  name: imgboard8.jpg
+  name: imgboard.jpg
   perspective:
+    delay_reset: 1
     pts1:
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
+    - - 1346.25
+      - 368.0
+    - - 793.25
+      - 361.75
+    - - 1475.5
+      - 722.25
+    - - 749.25
+      - 725.25
     pts2:
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
+    - - 1225.800048828125
+      - 270.0
+    - - 394.20001220703125
+      - 270.0
+    - - 1225.800048828125
+      - 810.0
+    - - 394.20001220703125
+      - 810.0
 pole:
-  decal: 0.0
-  height: 100.0
+  decal: 10.0
+  height: 160.0
 robots:
-  enemy_id: 5
-  friendly_id: 1
-  radius: 191
+  enemy_id: 51
+  friendly_id: 51
