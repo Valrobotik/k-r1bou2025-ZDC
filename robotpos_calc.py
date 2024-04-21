@@ -38,17 +38,15 @@ def get_rotation(img, id_range : list, detector : cv2.aruco.ArucoDetector = None
     
     for i in range(len(ids)) :
         if ids[i] in id_range :
-            x1 = corners[i][0][0][0]
-            y1 = corners[i][0][0][1]
-            x2 = corners[i][0][1][0]
-            y2 = corners[i][0][1][1]
+            x1 = corners[i][0][3][0]
+            y1 = corners[i][0][3][1]
+            x2 = corners[i][0][0][0]
+            y2 = corners[i][0][0][1]
             
-            center = np.mean(corners[i][0], axis = 0) #center of the aruco
-            vectors = np.array([[x1, y1], [x2, y2]]) - center #vectors from the center to the corners
-            angles = np.arctan2(vectors[:, 1], vectors[:, 0]) #angles of the vectors
-            rotation = float(np.mean(angles)) #mean of the angles
-            
+            rotation = np.arctan2((y2 - y1), (x2 - x1))
+
             return rotation
+        
     logger.error("Aruco in range {} not found while calculating the rotation".format(id_range))
     return 0.
 
@@ -172,6 +170,7 @@ def main(robot_color = 0) :
     
     while True :
         rst, img = cam.read()
+        img = cv2.imread(str(Path(__file__).parent / "img" / "2024-04-17-201248.jpg"))
 
         # If the camera is working
         if rst :  
