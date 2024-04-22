@@ -32,6 +32,7 @@ def recognize_arucos(img, wimg = False, detector : cv2.aruco.ArucoDetector = Non
         detector = make_detector.make_detector()
         
     (corners, ids, rejected) = detector.detectMarkers(img)
+    print(ids)
     logger.debug("Detected arucos : {}".format(ids))
 
     if wimg : #if display img

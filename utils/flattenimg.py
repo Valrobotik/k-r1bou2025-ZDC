@@ -100,7 +100,7 @@ def calc_perspective(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None
 
     return pts1, pts2
 
-def unwarp_img(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None, wimg = False) :
+def unwarp_img(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None, perspective : tuple  = None, wimg : bool = False) :
     """Unwarps the image using the perspective transformation
     
     Args:
@@ -117,12 +117,16 @@ def unwarp_img(img : np.ndarray, detector : cv2.aruco.ArucoDetector = None, wimg
     img_width = int(img_height * 3/2)
 
     #Load config file
-    config = yaml.safe_load(open(str(Path(__file__).parent.parent / "config" / "board.yaml")))
+    if perspective is None :
+        config = yaml.safe_load(open(str(Path(__file__).parent.parent / "config" / "board.yaml")))
 
-    #Get perspective transformation
-    pts1 = np.float32(config["img"]["perspective"]["pts1"])
-    pts2 = np.float32(config["img"]["perspective"]["pts2"])
-
+        #Get perspective transformation
+        pts1 = np.float32(config["img"]["perspective"]["pts1"])
+        pts2 = np.float32(config["img"]["perspective"]["pts2"])
+    
+    else :
+        pts1, pts2 = perspective
+        
     if np.array_equal(pts1, np.zeros((4, 2))) :
         pts1, pts2 = calc_perspective(img, detector)
 

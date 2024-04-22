@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 with open(str(Path(__file__).parent / "config" / "board.yaml"), "r") as f :
     config = yaml.safe_load(f)
     logger.setLevel(config["logger"])
+    pts1 = np.float32(config["img"]["perspective"]["pts1"])
+    pts2 = np.float32(config["img"]["perspective"]["pts2"])
 
 def get_rotation(img, id_range : list, detector : cv2.aruco.ArucoDetector = None) :
     """Returns the rotation of the aruco with the given id. This assumes that the image was flattened.
@@ -115,8 +117,9 @@ def calc_real_pos_and_rot(img : np.ndarray, id_range : list, pole_decal : int, p
     Returns:
         tuple: the x, y and alpha values of the robot
     """
-        
-    unwarped_img = flt.unwarp_img(img, detector)
+    global pts1, pts2
+    
+    unwarped_img = flt.unwarp_img(img, detector, (pts1, pts2))
     
     # Get the position of the robot
     x, y = calc_real_pos(unwarped_img, pole_decal, pole_height, ar_height, id_range, detector)
@@ -134,7 +137,7 @@ def calc_real_pos_and_rot(img : np.ndarray, id_range : list, pole_decal : int, p
     
     if reset :
         try :
-            flt.calc_perspective(img, detector)
+            pts1, pts2 = flt.calc_perspective(img, detector)
             logger.info("Perspective reset")
         except Exception as e :
             logger.error("Error while resetting the perspective : ", e)
@@ -170,7 +173,6 @@ def main(robot_color = 0) :
     
     while True :
         rst, img = cam.read()
-        img = cv2.imread(str(Path(__file__).parent / "img" / "2024-04-17-201248.jpg"))
 
         # If the camera is working
         if rst :  

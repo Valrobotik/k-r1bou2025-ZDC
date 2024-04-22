@@ -4,14 +4,14 @@ display: 1
 img:
   perspective:
     pts1:
-    - - 1326.0
-      - 379.25
-    - - 788.25
-      - 388.75
-    - - 1469.5
-      - 718.5
-    - - 753.0
-      - 742.75
+    - - 1375.0
+      - 362.0
+    - - 812.25
+      - 339.0
+    - - 1491.75
+      - 730.0
+    - - 760.25
+      - 706.0
     pts2:
     - - 1225.800048828125
       - 270.0
@@ -23,14 +23,14 @@ img:
       - 810.0
 logger: INFO
 pole:
-  decal: 10 # in cm. positive : left, negative : right
-  height: 160 # in cm
+  decal: 10
+  height: 160
 robots:
-  blue_ar_height: 44 # in cm
+  blue_ar_height: 44
   blue_id_range:
   - 51
   - 70
-  yellow_ar_height: 50 # in cm
+  yellow_ar_height: 50
   yellow_id_range:
   - 71
   - 90
