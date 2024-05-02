@@ -8,7 +8,7 @@ import time
 import logging
 
 from utils import flattenimg as flt, tagDetector as tagd, reset, make_detector
-import plant_detection
+import plant_detection as pld
 
 # Logger
 logging.basicConfig(level = logging.INFO)
@@ -122,7 +122,7 @@ def calc_real_pos_and_rot(img : np.ndarray, id_range : list, pole_decal : int, p
     
     unwarped_img = flt.unwarp_img(img, detector, (pts1, pts2))
 
-    plant_list = plant_detection.calc_real_pos(unwarped_img, pole_decal, pole_height, 5, True)
+    plant_list = pld.calc_real_pos(unwarped_img, pole_decal, pole_height, 5)
     logger.info("Plants : {}".format(plant_list))
     
     # Get the position of the robot

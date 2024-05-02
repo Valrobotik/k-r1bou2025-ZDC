@@ -70,8 +70,7 @@ def find_plants(flat_img : np.ndarray) :
             cy = int(M['m01'] / M['m00'])
             cx, cy = convert_coords(cx, cy, flat_img.shape[1], flat_img.shape[0])
             if not is_in_zone(cx, cy):
-                plant_list.append((cx, cy))
-        
+                plant_list.append((cx, cy))        
     return plant_list
 
 def calc_real_pos(flat_img : np.ndarray, pole_decal : int, pole_height : int, plant_height : int):
