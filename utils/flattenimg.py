@@ -36,7 +36,7 @@ def edgeArucoDetection(img : np.ndarray, detector : cv2.aruco.ArucoDetector = No
     """
 
     #Detect arucos
-    corners, ids, _ = tagd.recognize_arucos(img, True, detector)
+    corners, ids, _ = tagd.recognize_arucos(img, False, detector)
     arPos : list[list[int]] = [[0, 0], [0, 0], [0, 0], [0, 0]]
     nb_ar = 0
     

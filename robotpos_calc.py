@@ -67,7 +67,7 @@ def calc_real_pos(flat_img : np.ndarray, pole_decal : int, pole_height : int, ar
     #Load the image and the arucos
     img_height = len(flat_img) // 2
     img_width = len(flat_img[0]) // 2
-    corners, ids, _ = tagd.recognize_arucos(flat_img, True, detector)
+    corners, ids, _ = tagd.recognize_arucos(flat_img, False, detector)
     
     if ids is None :
         logger.error("No aruco found while calculating the position")
@@ -120,7 +120,7 @@ def calc_real_pos_and_rot(img : np.ndarray, id_range : list, pole_decal : int, p
     """
     global pts1, pts2
     
-    unwarped_img = flt.unwarp_img(img, detector, (pts1, pts2))
+    unwarped_img = flt.unwarp_img(img, detector, (pts1, pts2), False)
 
     plant_list = pld.calc_real_pos(unwarped_img, pole_decal, pole_height, 5)
     logger.info("Plants : {}".format(plant_list))
