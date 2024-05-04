@@ -1,0 +1,35 @@
+cam_id: 0
+delay_reset: 1
+display: 1
+img:
+  perspective:
+    pts1:
+    - - 0
+      - 0
+    - - 0
+      - 0
+    - - 0
+      - 0
+    - - 0
+      - 0
+    pts2:
+    - - 0
+      - 0
+    - - 0
+      - 0
+    - - 0
+      - 0
+    - - 0
+      - 0
+pole:
+  decal: -5
+  height: 153
+robots:
+  blue_ar_height: 43
+  blue_id_range:
+  - 51
+  - 70
+  yellow_ar_height: 43
+  yellow_id_range:
+  - 71
+  - 90
