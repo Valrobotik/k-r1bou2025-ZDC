@@ -13,10 +13,23 @@ from std_msgs.msg import Int8, Bool
 # Callback pour mettre à jour l'état courant
 # On insére par défaut 1 pour jouer le son d'initialisation
 list_play = [0,1]
-def callback(data: Int8):
+def int_callback(data: Int8):
     global list_play
     if len(list_play) < 3:
         list_play.append(data.data)
+
+# Callback pour mettre à jour l'état de lancement (cad quand le starter est tiré)
+is_launched = False
+def bool_callback(data: Bool):
+    old_time = 0
+    global is_launched
+    is_launched = data.data
+    # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 8 à 12 secondes
+    if is_launched:
+        while is_launched:
+            time.sleep(random.randint(8, 12))
+            list_play.append(4)
+    
 
 # Fonctions pour gérer la connexion au haut-parleur
 def connect_to_speaker(speaker_name):
@@ -38,7 +51,8 @@ audio_files = {
     1: "/home/valrob/Music/CDFR_robot_sound/initialise",
     2: "/home/valrob/Music/CDFR_robot_sound/team_yellow",
     3: "/home/valrob/Music/CDFR_robot_sound/team_blue",
-    4: "/home/valrob/Music/CDFR_robot_sound/pami",
+    4: "/home/valrob/Music/CDFR_robot_sound/random",
+    5: "/home/valrob/Music/CDFR_robot_sound/pami",
 }
 
 # Choix aléatoire du son à jouer parmis le dossier de son choisi
@@ -52,7 +66,8 @@ def choosen_sound():
 # Initialisation du noeud ROS
 rospy.init_node("bluetooth_sound")
 rospy.loginfo("[START] Bluetooth_sound node has started.")
-rospy.Subscriber("speaker_choice", Int8, callback)
+rospy.Subscriber("speaker_choice", Int8, int_callback)
+rospy.Subscriber("runningPhase", Bool, bool_callback)
 speaker_state = rospy.Publisher("speaker_state", Bool, queue_size=1)
 
 rospy.sleep(2)
