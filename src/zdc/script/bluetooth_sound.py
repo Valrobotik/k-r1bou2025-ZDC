@@ -2,6 +2,8 @@
 from playsound import playsound
 import subprocess
 import time
+import random
+import os
 
 import rospy
 from std_msgs.msg import Int8, Bool
@@ -30,13 +32,20 @@ def is_speaker_connected(speaker_name):
     except subprocess.CalledProcessError:
         return False
 
-# Mapping des états aux chemins de fichiers audio
+# Mapping des états aux chemins des dossiers de sons
 audio_files = {
-    1: "/home/valrob/Music/CDFR_robot_sound/initialise/1-initialise.wav",
-    2: "/home/valrob/Music/CDFR_robot_sound/team_select/2-jaune.mp3",
-    3: "/home/valrob/Music/CDFR_robot_sound/team_select/3-bleue.mp3",
-    4: "/home/valrob/Music/CDFR_robot_sound/pami/4-starter-pami.mp3",
+    1: "/home/valrob/Music/CDFR_robot_sound/initialise",
+    2: "/home/valrob/Music/CDFR_robot_sound/team_yellow",
+    3: "/home/valrob/Music/CDFR_robot_sound/team_blue",
+    4: "/home/valrob/Music/CDFR_robot_sound/pami",
 }
+
+# Choix aléatoire du son à jouer parmis le dossier de son choisi
+def choosen_sound():
+    # Récupère le nom d'un fichier audio aléatoire dans le dossier
+    file_name = random.choice(os.listdir(audio_files[list_play[0]]))
+    return f"{audio_files[list_play[0]]}/{file_name}"
+
 
 # Initialisation du noeud ROS
 rospy.init_node("bluetooth_sound")
@@ -58,7 +67,7 @@ while not rospy.is_shutdown():
         if is_speaker_connected("21:9E:04:77:33:65"):
             # Jouer le son
             rospy.loginfo(f"(SPEAKER) Playing sound {list_play[0]}...")
-            playsound(audio_files[list_play[0]])
+            playsound(choosen_sound())
         else:
             # Tenter de se connecter au haut-parleur
             rospy.loginfo("(SPEAKER) Speaker not connected. Trying to connect...")
@@ -69,7 +78,7 @@ while not rospy.is_shutdown():
                 time.sleep(2.5)
                 # Jouer le son
                 rospy.loginfo(f"(SPEAKER) Playing sound {list_play[0]}...")
-                playsound(audio_files[list_play[0]])
+                playsound(choosen_sound())
             except subprocess.CalledProcessError:
                 rospy.logerr("(SPEAKER) Failed to connect to speaker.")
         list_play.pop(0)
