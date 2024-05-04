@@ -9,7 +9,8 @@ from std_msgs.msg import Int8, Bool
 # Variable de l'état courant
 
 # Callback pour mettre à jour l'état courant
-list_play = [3]
+# On insére par défaut 1 pour jouer le son d'initialisation
+list_play = [1]
 def callback(data: Int8):
     global list_play
     if len(list_play) < 3:
@@ -34,6 +35,7 @@ audio_files = {
     1: "/home/valrob/catkin_ws/src/zdc/sounds/initialise/1-initialise.wav",
     2: "/home/valrob/catkin_ws/src/zdc/sounds/team_select/2-jaune.mp3",
     3: "/home/valrob/catkin_ws/src/zdc/sounds/team_select/3-rouge.mp3",
+    4: "/home/valrob/catkin_ws/src/zdc/sounds/pami/starter-pami.mp3",
 }
 
 
