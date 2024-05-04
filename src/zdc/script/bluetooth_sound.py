@@ -12,7 +12,7 @@ from std_msgs.msg import Int8, Bool
 
 # Callback pour mettre à jour l'état courant
 # On insére par défaut 1 pour jouer le son d'initialisation
-list_play = [1]
+list_play = [0,1]
 def callback(data: Int8):
     global list_play
     if len(list_play) < 3:
@@ -34,6 +34,7 @@ def is_speaker_connected(speaker_name):
 
 # Mapping des états aux chemins des dossiers de sons
 audio_files = {
+    0: "/home/valrob/Music/CDFR_robot_sound/startup",
     1: "/home/valrob/Music/CDFR_robot_sound/initialise",
     2: "/home/valrob/Music/CDFR_robot_sound/team_yellow",
     3: "/home/valrob/Music/CDFR_robot_sound/team_blue",
