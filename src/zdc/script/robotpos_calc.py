@@ -206,23 +206,23 @@ def main() :
                         rospy.logerr(f"(CAMERA POLE) Error while resetting the perspective : {e}")
 
             result_blue, result_yellow = calc_real_pos_and_rot(img, pole_decal, pole_height, ar_height_blue, ar_height_yellow, id_range_blue, id_range_yellow, detector, display)
-                
+            print(result_blue, result_yellow)
             if result_blue is not None and result_yellow is not None :
                 # Convert the position to meters
                 if result_blue != (-1, -1, -1) :
-                    result_blue[0] /= 100
-                    result_blue[1] /= 100
+                    result_blue_x = result_blue[0] / 100
+                    result_blue_y = result_blue[1] / 100
 
                 if result_yellow != (-1, -1, -1) :
-                    result_yellow[0] /= 100
-                    result_yellow[1] /= 100
+                    result_yellow_x = result_yellow[0] / 100
+                    result_yellow_y = result_yellow[1] / 100
 
                 # Publish the position
-                pos_rot_pub.publish(Float32MultiArray(data=[result_blue[0], result_blue[1], result_blue[2],
-                                                            result_yellow[0], result_yellow[1], result_yellow[2]]))
+                pos_rot_pub.publish(Float32MultiArray(data=[result_blue_x, result_blue_y, result_blue[2],
+                                                            result_yellow_x, result_yellow_y, result_yellow[2]]))
 
-                rospy.loginfo(f"(CAMERA POLE) Blue robot : {result_blue[0]}, {result_blue[1]}, {result_blue[2]}")
-                rospy.loginfo(f"(CAMERA POLE) Yellow robot : {result_yellow[0]}, {result_yellow[1]}, {result_yellow[2]}")
+                rospy.loginfo(f"(CAMERA POLE) Blue robot : {result_blue_x}, {result_blue_y}, {result_blue[2]}")
+                rospy.loginfo(f"(CAMERA POLE) Yellow robot : {result_yellow_x}, {result_yellow_y}, {result_yellow[2]}")
                 
         else :
             rospy.logerr("(CAMERA POLE) Error while reading the camera")
