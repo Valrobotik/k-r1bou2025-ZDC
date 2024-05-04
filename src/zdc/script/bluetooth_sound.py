@@ -42,8 +42,9 @@ audio_files = {
 
 # Choix aléatoire du son à jouer parmis le dossier de son choisi
 def choosen_sound():
-    # Récupère le nom d'un fichier audio aléatoire dans le dossier
+    # Récupère le nom d'un fichier audio aléatoirement dans le dossier
     file_name = random.choice(os.listdir(audio_files[list_play[0]]))
+    # Retourne le chemin complet du fichier audio à jouer
     return f"{audio_files[list_play[0]]}/{file_name}"
 
 
