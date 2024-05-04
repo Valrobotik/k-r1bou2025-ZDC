@@ -1,6 +1,10 @@
 #!/bin/bash
 # Demande de lIP de la raspy à lutilisateur
 read -p "Entrez l'adresse IP de la Raspy: " -i 192.168. -e IP
+# Kill de l'ancien processus
+pkill -f robotpos_calc.py
+pkill -f bluetooth_sound.py
+sleep 2
 # Récupération de l'IP locale
 IP_ADDRESS=$(hostname -I | awk '{print $1}')
 # Export de la donnée dans la variable ROS_IP
