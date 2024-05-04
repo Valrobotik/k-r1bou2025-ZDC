@@ -2,3 +2,5 @@ img/
 __pycache__/
 kr1bou/
 /.vscode/
+/build/
+/devel/

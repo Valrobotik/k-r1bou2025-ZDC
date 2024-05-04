@@ -1,8 +1,0 @@
-prefix=/home/valrob/catkin_ws/devel
-
-Name: zdc
-Description: Description of zdc
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
