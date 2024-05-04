@@ -28,6 +28,7 @@ def bool_callback(data: Bool):
     if is_launched:
         while is_launched:
             time.sleep(random.randint(28,32))
+            # Joue un son aléatoire
             list_play.append(4)
     
 
@@ -83,7 +84,7 @@ while not rospy.is_shutdown():
         # Vérifier si le haut-parleur est toujours connecté
         if is_speaker_connected("21:9E:04:77:33:65"):
             # Jouer le son
-            rospy.loginfo(f"(SPEAKER) Playing sound {list_play[0]}...")
+            rospy.loginfo(f"(SPEAKER) Playing sound from folder {audio_files[list_play[0]]}...")
             playsound(choosen_sound())
         else:
             # Tenter de se connecter au haut-parleur
@@ -94,7 +95,7 @@ while not rospy.is_shutdown():
                 # Attendre 2.5 secondes pour que la connexion soit établie
                 time.sleep(2.5)
                 # Jouer le son
-                rospy.loginfo(f"(SPEAKER) Playing sound {list_play[0]}...")
+                rospy.loginfo(f"(SPEAKER) Playing sound from folder {audio_files[list_play[0]]}...")
                 playsound(choosen_sound())
             except subprocess.CalledProcessError:
                 rospy.logerr("(SPEAKER) Failed to connect to speaker.")
