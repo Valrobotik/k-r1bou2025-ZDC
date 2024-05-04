@@ -24,10 +24,10 @@ def bool_callback(data: Bool):
     old_time = 0
     global is_launched
     is_launched = data.data
-    # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 8 à 12 secondes
+    # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 28 à 32 secondes
     if is_launched:
         while is_launched:
-            time.sleep(random.randint(8, 12))
+            time.sleep(random.randint(28,32))
             list_play.append(4)
     
 
