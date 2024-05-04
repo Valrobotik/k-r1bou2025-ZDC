@@ -35,7 +35,7 @@ audio_files = {
     1: "/home/valrob/catkin_ws/src/zdc/sounds/initialise/1-initialise.wav",
     2: "/home/valrob/catkin_ws/src/zdc/sounds/team_select/2-jaune.mp3",
     3: "/home/valrob/catkin_ws/src/zdc/sounds/team_select/3-rouge.mp3",
-    4: "/home/valrob/catkin_ws/src/zdc/sounds/pami/starter-pami.mp3",
+    4: "/home/valrob/catkin_ws/src/zdc/sounds/pami/4-starter-pami.mp3",
 }
 
 
