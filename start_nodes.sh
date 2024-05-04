@@ -2,6 +2,7 @@
 # Demande de lIP de la raspy à lutilisateur
 read -p "Entrez l'adresse IP de la Raspy: " -i 192.168. -e IP
 # Kill de l'ancien processus
+echo "Killing old processes..."
 pkill -f robotpos_calc.py
 pkill -f bluetooth_sound.py
 sleep 2
