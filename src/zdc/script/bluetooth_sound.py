@@ -34,7 +34,7 @@ def is_speaker_connected(speaker_name):
 audio_files = {
     1: "/home/valrob/Music/CDFR_robot_sound/initialise/1-initialise.wav",
     2: "/home/valrob/Music/CDFR_robot_sound/team_select/2-jaune.mp3",
-    3: "/home/valrob/Music/CDFR_robot_sound/team_select/3-rouge.mp3",
+    3: "/home/valrob/Music/CDFR_robot_sound/team_select/3-bleue.mp3",
     4: "/home/valrob/Music/CDFR_robot_sound/pami/4-starter-pami.mp3",
 }
 
