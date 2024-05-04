@@ -32,12 +32,11 @@ def is_speaker_connected(speaker_name):
 
 # Mapping des états aux chemins de fichiers audio
 audio_files = {
-    1: "/home/valrob/catkin_ws/src/zdc/sounds/initialise/1-initialise.wav",
-    2: "/home/valrob/catkin_ws/src/zdc/sounds/team_select/2-jaune.mp3",
-    3: "/home/valrob/catkin_ws/src/zdc/sounds/team_select/3-rouge.mp3",
-    4: "/home/valrob/catkin_ws/src/zdc/sounds/pami/4-starter-pami.mp3",
+    1: "/home/valrob/Music/CDFR_robot_sound/initialise/1-initialise.wav",
+    2: "/home/valrob/Music/CDFR_robot_sound/team_select/2-jaune.mp3",
+    3: "/home/valrob/Music/CDFR_robot_sound/team_select/3-rouge.mp3",
+    4: "/home/valrob/Music/CDFR_robot_sound/pami/4-starter-pami.mp3",
 }
-
 
 # Initialisation du noeud ROS
 rospy.init_node("bluetooth_sound")
