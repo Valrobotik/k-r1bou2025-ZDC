@@ -46,7 +46,7 @@ def recognize_arucos(img, wimg = False, detector : cv2.aruco.ArucoDetector = Non
 
 # DISPLAY
 
-def show_real_pos_img(img : np.ndarray, x : float, y : float, alpha : float = 0.) :
+def show_real_pos_img(img : np.ndarray, blue_pos : tuple, yellow_pos : tuple) :
     """Displays the image with the calculated position of the robot
     Args:
         img : the image
@@ -57,16 +57,25 @@ def show_real_pos_img(img : np.ndarray, x : float, y : float, alpha : float = 0.
     img_copy = img.copy()
     width = img.shape[1]
     height = img.shape[0]
+    x_blue, y_blue, alpha_blue = blue_pos
+    x_yellow, y_yellow, alpha_yellow = yellow_pos
     
-    x = width / 4 + x * width / 600
-    y = height - (height / 4 + y * height / 400)
+    x_blue = width / 4 + x_blue * width / 600
+    y_blue = height - (height / 4 + y_blue * height / 400)
+    x_yellow = width / 4 + x_yellow * width / 600
+    y_yellow = height - (height / 4 + y_yellow * height / 400)
+
     # draw position
-    cv2.drawMarker(img_copy, (int(x), int(y)), (0, 255, 0), cv2.MARKER_CROSS, 20, 10)
+    cv2.drawMarker(img_copy, (int(x_blue), int(y_blue)), (0, 0, 255), cv2.MARKER_CROSS, 20, 10)
+    cv2.drawMarker(img_copy, (int(x_yellow), int(y_yellow)), (0, 255, 255), cv2.MARKER_CROSS, 20, 10)
     #draw rotation
-    x2 = x + 100 * np.cos(alpha)
-    y2 = y + 100 * np.sin(alpha)
-    cv2.line(img_copy, (int(x), int(y)), (int(x2), int(y2)), (0, 255, 0), 10)
-    
+    x2_blue = x_blue + 100 * np.cos(alpha_blue)
+    y2_blue = y_blue + 100 * np.sin(alpha_blue)
+    x2_yellow = x_yellow + 100 * np.cos(alpha_yellow)
+    y2_yellow = y_yellow + 100 * np.sin(alpha_yellow)
+    cv2.line(img_copy, (int(x_blue), int(y_blue)), (int(x2_blue), int(y2_blue)), (0, 0, 255), 10)
+    cv2.line(img_copy, (int(x_yellow), int(y_yellow)), (int(x2_yellow), int(y2_yellow)), (0, 255, 255), 10)
+        
     img_copy = cv2.resize(img_copy, (int(img.shape[1] / 4), int(img.shape[0] / 4)))
 
     cv2.imshow("Real position", img_copy)
