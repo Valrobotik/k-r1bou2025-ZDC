@@ -84,11 +84,11 @@ speaker_state.publish(temp)
 compteur = 0
 while not rospy.is_shutdown():
     # Vérifier si l'état a changé
-    if is_launched and time.time()-start_time > random_time and compteur < 2:
+    if is_launched and time.time()-start_time > random_time and compteur < 3:
         compteur+=1
         list_play.append(5)
         start_time = time.time()
-        random_time = random.randint(28,32)
+        random_time = random.randint(20,35)
 
 
     if len(list_play) > 0:
