@@ -209,11 +209,11 @@ def main() :
             print(result_blue, result_yellow)
             if result_blue is not None and result_yellow is not None :
                 # Convert the position to meters
-                if result_blue != (-1, -1, -1) :
+                if result_blue[0] != -1 and result_blue[1] != -1 :
                     result_blue_x = result_blue[0] / 100
                     result_blue_y = result_blue[1] / 100
 
-                if result_yellow != (-1, -1, -1) :
+                if result_yellow[0] != -1 and result_yellow[1] != -1 :
                     result_yellow_x = result_yellow[0] / 100
                     result_yellow_y = result_yellow[1] / 100
 
