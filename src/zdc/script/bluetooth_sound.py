@@ -112,4 +112,3 @@ while not rospy.is_shutdown():
             except subprocess.CalledProcessError:
                 rospy.logerr("(SPEAKER) Failed to connect to speaker.")
         list_play.pop(0)
-        # Réinitialiser le flag
