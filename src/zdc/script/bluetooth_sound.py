@@ -20,17 +20,18 @@ def int_callback(data: Int8):
 
 # Callback pour mettre à jour l'état de lancement (cad quand le starter est tiré)
 is_launched = False
+start_time = time.time()
+random_time = 1000
 def bool_callback(data: Bool):
     old_time = 0
-    global is_launched
+    global is_launched, start_time, random_time
     is_launched = data.data
+
     # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 28 à 32 secondes pour jouer un son random
     if is_launched:
         rospy.loginfo(f"(SPEAKER) Data received from starter : {is_launched}")
-        while is_launched:
-            time.sleep(random.randint(28,32))
-            # Joue un son aléatoire
-            list_play.append(5)
+        start_time = time.time()
+        random_time = random.randint(28,32)
     
 
 # Fonctions pour gérer la connexion au haut-parleur
@@ -83,6 +84,12 @@ speaker_state.publish(temp)
 # Boucle principale
 while not rospy.is_shutdown():
     # Vérifier si l'état a changé
+    if is_launched and time.time()-start_time > random_time:
+        list_play.append(5)
+        start_time = time.time()
+        random_time = random.randint(28,32)
+
+
     if len(list_play) > 0:
         # Vérifier si le haut-parleur est toujours connecté
         if is_speaker_connected("21:9E:04:77:33:65"):
