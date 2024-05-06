@@ -24,12 +24,12 @@ def bool_callback(data: Bool):
     old_time = 0
     global is_launched
     is_launched = data.data
-    # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 28 à 32 secondes
+    # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 28 à 32 secondes pour jouer un son random
     if is_launched:
         while is_launched:
             time.sleep(random.randint(28,32))
             # Joue un son aléatoire
-            list_play.append(4)
+            list_play.append(5)
     
 
 # Fonctions pour gérer la connexion au haut-parleur
@@ -52,8 +52,10 @@ audio_files = {
     1: "/home/valrob/Music/CDFR_robot_sound/initialise",
     2: "/home/valrob/Music/CDFR_robot_sound/team_yellow",
     3: "/home/valrob/Music/CDFR_robot_sound/team_blue",
-    4: "/home/valrob/Music/CDFR_robot_sound/random",
-    5: "/home/valrob/Music/CDFR_robot_sound/pami",
+    4: "/home/valrob/Music/CDFR_robot_sound/match_started",
+    5: "/home/valrob/Music/CDFR_robot_sound/random",
+    6: "/home/valrob/Music/CDFR_robot_sound/pami",
+    7: "/home/valrob/Music/CDFR_robot_sound/match_end",
 }
 
 # Choix aléatoire du son à jouer parmis le dossier de son choisi
