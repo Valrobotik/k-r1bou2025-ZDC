@@ -12,10 +12,10 @@ from std_msgs.msg import Int8, Bool
 
 # Callback pour mettre à jour l'état courant
 # On insére par défaut 1 pour jouer le son d'initialisation
-list_play = [0,1]
+list_play = [0,1,8]
 def int_callback(data: Int8):
     global list_play
-    if len(list_play) < 3:
+    if len(list_play) < 4:
         list_play.append(data.data)
 
 # Callback pour mettre à jour l'état de lancement (cad quand le starter est tiré)
@@ -57,6 +57,7 @@ audio_files = {
     5: "/home/valrob/Music/CDFR_robot_sound/random",
     6: "/home/valrob/Music/CDFR_robot_sound/pami",
     7: "/home/valrob/Music/CDFR_robot_sound/match_end",
+    8: "/home/valrob/Music/CDFR_robot_sound/loading",
 }
 
 # Choix aléatoire du son à jouer parmis le dossier de son choisi
