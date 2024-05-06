@@ -72,7 +72,7 @@ def choosen_sound():
 rospy.init_node("bluetooth_sound")
 rospy.loginfo("[START] Bluetooth_sound node has started.")
 rospy.Subscriber("speaker_choice", Int8, int_callback)
-rospy.Subscriber("runningPhase", Bool, bool_callback)
+rospy.Subscriber("running_phase", Bool, bool_callback)
 speaker_state = rospy.Publisher("speaker_state", Bool, queue_size=1)
 
 rospy.sleep(2)
