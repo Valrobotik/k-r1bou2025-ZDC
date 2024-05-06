@@ -26,6 +26,7 @@ def bool_callback(data: Bool):
     is_launched = data.data
     # Puisque la durée d'un match est de 100 secondes, envoi une demande de lecture toute les 28 à 32 secondes pour jouer un son random
     if is_launched:
+        rospy.loginfo(f"(SPEAKER) Data received from starter : {is_launched}")
         while is_launched:
             time.sleep(random.randint(28,32))
             # Joue un son aléatoire
