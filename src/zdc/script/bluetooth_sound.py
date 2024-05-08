@@ -94,7 +94,7 @@ while not rospy.is_shutdown():
 
     if len(list_play) > 0:
         # Vérifier si le haut-parleur est toujours connecté
-        if is_speaker_connected("21:9E:04:77:33:65"):
+        if is_speaker_connected("C0:28:8D:85:3C:74"):
             # Jouer le son
             rospy.loginfo(f"(SPEAKER) Playing sound from folder {audio_files[list_play[0]]}...")
             playsound(choosen_sound())
@@ -102,7 +102,7 @@ while not rospy.is_shutdown():
             # Tenter de se connecter au haut-parleur
             rospy.loginfo("(SPEAKER) Speaker not connected. Trying to connect...")
             try:
-                connect_to_speaker("21:9E:04:77:33:65")
+                connect_to_speaker("C0:28:8D:85:3C:74")
                 rospy.loginfo("(SPEAKER) Connected to speaker.")
                 # Attendre 2.5 secondes pour que la connexion soit établie
                 time.sleep(2.5)
