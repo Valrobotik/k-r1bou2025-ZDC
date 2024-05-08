@@ -168,8 +168,8 @@ def main() :
     ar_height_yellow = config["robots"]["yellow_ar_height"]
     pole_decal = config["pole"]["decal"]
     pole_height = config["pole"]["height"]
-    id_range_blue = range(config["robots"]["blue_id_range"][0], config["robots"]["blue_id_range"][1])
-    id_range_yellow = range(config["robots"]["yellow_id_range"][0], config["robots"]["yellow_id_range"][1])
+    id_range_blue = range(config["robots"]["blue_id_range"][0], config["robots"]["blue_id_range"][1] + 1)
+    id_range_yellow = range(config["robots"]["yellow_id_range"][0], config["robots"]["yellow_id_range"][1] + 1)
     ar_height_blue = config["robots"]["blue_ar_height"]
     ar_height_yellow = config["robots"]["yellow_ar_height"]
     cam_id = config["cam_id"]
