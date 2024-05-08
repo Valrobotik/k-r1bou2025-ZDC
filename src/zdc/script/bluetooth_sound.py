@@ -12,7 +12,7 @@ from std_msgs.msg import Int8, Bool
 
 # Callback pour mettre à jour l'état courant
 # On insére par défaut 1 pour jouer le son d'initialisation
-list_play = [0,1,8]
+list_play = [0,8,1]
 def int_callback(data: Int8):
     global list_play
     if len(list_play) < 4:
