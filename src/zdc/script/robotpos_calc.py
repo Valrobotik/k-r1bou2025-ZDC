@@ -212,10 +212,17 @@ def main() :
                 if result_blue[0] != -1 and result_blue[1] != -1 :
                     result_blue_x = result_blue[0] / 100
                     result_blue_y = result_blue[1] / 100
+                else :
+                    result_blue_x = -1
+                    result_blue_y = -1
 
                 if result_yellow[0] != -1 and result_yellow[1] != -1 :
                     result_yellow_x = result_yellow[0] / 100
                     result_yellow_y = result_yellow[1] / 100
+
+                else :
+                    result_yellow_x = -1
+                    result_yellow_y = -1
 
                 # Publish the position
                 pos_rot_pub.publish(Float32MultiArray(data=[result_blue_x, result_blue_y, result_blue[2],
