@@ -5,9 +5,9 @@ from pathlib import Path
 import numpy as np
 import yaml
 import cv2
-import time
 import rospy
-from std_msgs.msg import Float32MultiArray
+import time
+from std_msgs.msg import Float32MultiArray, Bool
 
 from utils import flattenimg as flt, tagDetector as tagd, reset, make_detector
 
@@ -16,6 +16,18 @@ with open(str(Path(__file__).parent / "config" / "board.yaml"), "r") as f :
     config = yaml.safe_load(f)
     pts1 = np.float32(config["img"]["perspective"]["pts1"])
     pts2 = np.float32(config["img"]["perspective"]["pts2"])
+
+pole_decal = 0
+
+def update_team(data : Bool) :
+    global pole_decal
+
+    if data.data :
+        pole_decal = config["pole"]["decal_blue"]
+        rospy.loginfo("(CAMERA POLE) Team set to blue")
+    else :
+        pole_decal = config["pole"]["decal_yellow"]
+        rospy.loginfo("(CAMERA POLE) Team set to yellow")
 
 def get_rotation(img, id_range_blue : range, id_range_yellow : range, detector : cv2.aruco.ArucoDetector = None) :
     """Returns the rotation of the aruco with the given id. This assumes that the image was flattened.
@@ -53,11 +65,10 @@ def get_rotation(img, id_range_blue : range, id_range_yellow : range, detector :
 
     return rotation_blue, rotation_yellow
 
-def calc_real_pos(flat_img : np.ndarray, pole_decal : int, pole_height : int, ar_height_blue : int, ar_height_yellow : int, id_range_blue : range, id_range_yellow : range, detector : cv2.aruco.ArucoDetector = None) :
+def calc_real_pos(flat_img : np.ndarray, pole_height : int, ar_height_blue : int, ar_height_yellow : int, id_range_blue : range, id_range_yellow : range, detector : cv2.aruco.ArucoDetector = None) :
     """Calculates the real position of the robot from the flattened image, according to the position of the pole
     params :
         flat_img : the flattened image
-        pole_decal : the distance between the pole and the center of the board : negative value -> left, positive value -> right
         pole_height : the height of the pole
         ar_height_blue : the height of the blue team aruco
         ar_height_yellow : the height of the yellow team aruco
@@ -65,6 +76,7 @@ def calc_real_pos(flat_img : np.ndarray, pole_decal : int, pole_height : int, ar
         id_range_yellow : the range of the yellow team aruco ids
         detector : the aruco detector
     """
+    global pole_decal
     
     #Load the image and the arucos
     img_height = len(flat_img) // 2
@@ -118,7 +130,7 @@ def calc_real_pos(flat_img : np.ndarray, pole_decal : int, pole_height : int, ar
 
     return (x_blue, y_blue), (x_yellow, y_yellow)
 
-def calc_real_pos_and_rot(img : np.ndarray, pole_decal : int, pole_height : int, ar_height_blue : int, ar_height_yellow : int, id_range_blue : range, id_range_yellow : range, detector : cv2.aruco.ArucoDetector = None, show = False) :
+def calc_real_pos_and_rot(img : np.ndarray, pole_height : int, ar_height_blue : int, ar_height_yellow : int, id_range_blue : range, id_range_yellow : range, detector : cv2.aruco.ArucoDetector = None, show = False) :
     """Calculates the real position of the robot from the camera.
     
     Args:
@@ -130,7 +142,7 @@ def calc_real_pos_and_rot(img : np.ndarray, pole_decal : int, pole_height : int,
     Returns:
         tuple: the x, y and alpha values of the robot
     """
-    global pts1, pts2
+    global pts1, pts2, pole_decal
     
     unwarped_img = flt.unwarp_img(img, detector, (pts1, pts2), False)
     
@@ -154,11 +166,12 @@ def main() :
     Args:
         robot_color (int, optional): The color of the robot. Defaults to 0. 0 for blue, 1 for yellow.
     """
-    global pts1, pts2
+    global pts1, pts2, pole_decal
 
     reset.reset_perspective()
     rospy.init_node("camera_pole")
     pos_rot_pub = rospy.Publisher("camera", Float32MultiArray, queue_size=1)
+    rospy.Subscriber("team", Bool, update_team)
     rospy.loginfo("[START] Camera_pole node has started.")
     
     # Load config file
@@ -166,7 +179,6 @@ def main() :
     delay_reset = config["delay_reset"]
     ar_height_blue = config["robots"]["blue_ar_height"]
     ar_height_yellow = config["robots"]["yellow_ar_height"]
-    pole_decal = config["pole"]["decal"]
     pole_height = config["pole"]["height"]
     id_range_blue = range(config["robots"]["blue_id_range"][0], config["robots"]["blue_id_range"][1] + 1)
     id_range_yellow = range(config["robots"]["yellow_id_range"][0], config["robots"]["yellow_id_range"][1] + 1)
