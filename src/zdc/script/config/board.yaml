@@ -4,33 +4,33 @@ display: 1
 img:
   perspective:
     pts1:
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
+    - - 1305.25
+      - 379.75
+    - - 782.25
+      - 383.25
+    - - 1430.25
+      - 708.25
+    - - 736.0
+      - 723.75
     pts2:
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
-    - - 0
-      - 0
+    - - 1225.800048828125
+      - 270.0
+    - - 394.20001220703125
+      - 270.0
+    - - 1225.800048828125
+      - 810.0
+    - - 394.20001220703125
+      - 810.0
 pole:
   decal_blue: -5
   decal_yellow: 10
-  height: 150
+  height: 160
 robots:
-  blue_ar_height: 43
+  blue_ar_height: 44
   blue_id_range:
   - 1
   - 5
-  yellow_ar_height: 43
+  yellow_ar_height: 44
   yellow_id_range:
-  - 6
-  - 10
+  - 50
+  - 54

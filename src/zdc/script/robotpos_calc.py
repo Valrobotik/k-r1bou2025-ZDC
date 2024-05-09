@@ -147,7 +147,7 @@ def calc_real_pos_and_rot(img : np.ndarray, pole_height : int, ar_height_blue : 
     unwarped_img = flt.unwarp_img(img, detector, (pts1, pts2), False)
     
     # Get the position of the robot
-    (x_blue, y_blue), (x_yellow, y_yellow) = calc_real_pos(unwarped_img, pole_decal, pole_height, ar_height_blue, ar_height_yellow, id_range_blue, id_range_yellow, detector)
+    (x_blue, y_blue), (x_yellow, y_yellow) = calc_real_pos(unwarped_img, pole_height, ar_height_blue, ar_height_yellow, id_range_blue, id_range_yellow, detector)
     
     # Get the rotation of the robot
     alpha_blue, alpha_yellow = get_rotation(unwarped_img, id_range_blue, id_range_yellow, detector)
@@ -217,7 +217,7 @@ def main() :
                     except Exception as e :
                         rospy.logerr(f"(CAMERA POLE) Error while resetting the perspective : {e}")
 
-            result_blue, result_yellow = calc_real_pos_and_rot(img, pole_decal, pole_height, ar_height_blue, ar_height_yellow, id_range_blue, id_range_yellow, detector, display)
+            result_blue, result_yellow = calc_real_pos_and_rot(img, pole_height, ar_height_blue, ar_height_yellow, id_range_blue, id_range_yellow, detector, display)
             print(result_blue, result_yellow)
             if result_blue is not None and result_yellow is not None :
                 # Convert the position to meters
